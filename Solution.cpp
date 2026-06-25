@@ -1,6 +1,8 @@
 #include "Solution.h"
 #include <algorithm>
-#include <map>
+
+#include <unordered_set>
+#include <set>
 
 vector<int> Solution::twoSum(vector<int>& nums, int target)
 {
@@ -64,9 +66,8 @@ void Solution::moveZeroes(vector<int>& nums)
 
 vector<vector<string>> Solution::groupAnagrams(vector<string>& strs)
 {
-    std::multimap<string, string> multimap;
-    vector<string> key;
     vector<vector<string>> res;
+    std::unordered_map<string, vector<string>> map;
 
     if (strs.size() == 1)
     {
@@ -79,35 +80,58 @@ vector<vector<string>> Solution::groupAnagrams(vector<string>& strs)
         string s = strs[i];
         sort(s.begin(), s.end());
 
-        auto it = multimap.find(s);
-        if (it == multimap.end())
+        auto it = map.find(s);
+        if (it != map.end())
         {
-            key.push_back(s);
+            it->second.push_back(strs[i]);
         }
-
-        multimap.insert(std::make_pair(s, strs[i]));
+        else
+        {
+            map[s] = { strs[i] };
+        }
     }
 
-    for (string str : key)
+    for (auto& pair : map)
     {
-        std::multimap<string, string>::iterator m;
-        std::multimap<string, string>::iterator beg = multimap.lower_bound(str);
-        std::multimap<string, string>::iterator end = multimap.upper_bound(str);
-
-        vector<string> strRes;
-
-        for (m = beg; m != end; m++)
-        {
-            strRes.push_back(m->second);
-        }
-
-        res.push_back(strRes);
+        res.push_back(pair.second);
     }
 
     return res;
 }
 
-vector<vector<string>> Solution::groupAnagramsNew(vector<string>& strs)
+int Solution::longestConsecutive(vector<int>& nums)
 {
-    return vector<vector<string>>();
+    if (nums.size() == 0)
+    {
+        return 0;
+    }
+
+    //sort(nums.begin(), nums.end());
+    set<int> set(nums.begin(), nums.end());
+    int max = 1;
+    int flag = 1;
+    int size = set.size();
+
+    for (auto it = set.begin(); it != set.end(); )
+    {
+        auto a = *it + 1;
+        ++it;               // 先推进迭代器
+        if (it == set.end())
+        {
+            break;          // 到达末尾，不再取第二个元素，直接结束
+        }
+        auto b = *it;       // 此时解引用是安全的
+        if (a == b)
+        {
+            flag++;
+        }
+        else
+        {
+            flag = 1;
+        }
+
+        max = flag > max ? flag : max;
+    }
+
+    return max;
 }

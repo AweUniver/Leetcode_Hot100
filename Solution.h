@@ -17,5 +17,7 @@ public:
 
     //字母异位词分组
     vector<vector<string>> groupAnagrams(vector<string>& strs);
-    vector<vector<string>> groupAnagramsNew(vector<string>& strs);
+
+    //最长连续序列
+    int longestConsecutive(vector<int>& nums);
 };

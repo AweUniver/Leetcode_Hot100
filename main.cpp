@@ -13,8 +13,11 @@ int main()
     //vector<int> vec = { 0,1,0,3,12 };
     //solution.moveZeroes(vec);
 
-    vector<string> vec = { "eat", "tea", "tan", "ate", "nat", "bat" };
-    solution.groupAnagrams(vec);
+    //vector<string> vec = { "eat", "tea", "tan", "ate", "nat", "bat" };
+    //solution.groupAnagrams(vec);
+
+    vector<int> vec = { 0 };
+    solution.longestConsecutive(vec);
 
     return 0;
 }
