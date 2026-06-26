@@ -16,8 +16,8 @@ int main()
     //vector<string> vec = { "eat", "tea", "tan", "ate", "nat", "bat" };
     //solution.groupAnagrams(vec);
 
-    vector<int> vec = { 0 };
-    solution.longestConsecutive(vec);
+    vector<int> vec = { 1 };
+    solution.longestConsecutiveNew(vec);
 
     return 0;
 }

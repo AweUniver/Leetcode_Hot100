@@ -135,3 +135,34 @@ int Solution::longestConsecutive(vector<int>& nums)
 
     return max;
 }
+
+int Solution::longestConsecutiveNew(vector<int>& nums)
+{
+std:unordered_set<int> set(nums.begin(), nums.end());
+
+    int max = 0;
+
+    for (auto& num : set)
+    {
+        int len = 1;
+        auto it = set.find(num - 1);
+
+        // 找起始数，找到后进行 对起始数进行num + length的查找。
+        if (it == set.end())
+        {
+            while (1)
+            {
+                if (set.find(num + len) == set.end())
+                    break;
+                len++;
+            }
+            max = len > max ? len : max;
+        }
+        else
+        {
+            continue;
+        }
+    }
+
+    return max;
+}

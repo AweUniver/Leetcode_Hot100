@@ -20,4 +20,5 @@ public:
 
     //最长连续序列
     int longestConsecutive(vector<int>& nums);
+    int longestConsecutiveNew(vector<int>& nums);
 };
