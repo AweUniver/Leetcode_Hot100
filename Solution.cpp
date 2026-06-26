@@ -3,6 +3,7 @@
 
 #include <unordered_set>
 #include <set>
+#include <functional>
 
 vector<int> Solution::twoSum(vector<int>& nums, int target)
 {
@@ -253,6 +254,41 @@ vector<vector<int>> Solution::threeSum(vector<int>& nums)
             }
         }
     }
+
+    return res;
+}
+
+vector<int> Solution::inorderTraversal(TreeNode* root)
+{
+    vector<int> res;
+
+    // auto 声明的 lambda，不能在内部调用自己
+    // 先声明 std::function 确定类型，再让 lambda 引用捕获它，就能正常实现递归自调用。
+    function<void(TreeNode*)> dfs;
+
+    dfs = [&](TreeNode* node)
+        {
+            if (!node)
+            {
+                return;
+            }
+
+            // 中序遍历 左 根 右
+            dfs(node->left);
+            res.push_back(node->val);
+            dfs(node->right);
+
+            // 前序遍历  根 左 右
+            //res.push_back(node->val);
+            //dfs(node->left);
+            //dfs(node->right);
+
+            //后序遍历  左 右 根
+            //dfs(node->left);
+            //dfs(node->right);
+            //res.push_back(node->val);
+        };
+    dfs(root);
 
     return res;
 }

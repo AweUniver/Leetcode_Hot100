@@ -22,8 +22,14 @@ int main()
     //vector<int> vec = { 8,7,2,1 };
     //solution.maxArea(vec);
 
-    vector<int> vec = { -100,-70,-60,110,120,130,160 };
-    solution.threeSum(vec);
+    //vector<int> vec = { -100,-70,-60,110,120,130,160 };
+    //solution.threeSum(vec);
+
+    TreeNode treeNode3(3, nullptr, nullptr);
+    TreeNode treeNode2(2, &treeNode3, nullptr);
+    TreeNode treeNode1(1, nullptr, &treeNode2);
+
+    solution.inorderTraversal(&treeNode1);
 
     return 0;
 }
