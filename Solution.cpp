@@ -21,7 +21,7 @@ vector<int> Solution::twoSum(vector<int>& nums, int target)
         hashmap[nums[i]] = i;
     }
 
-    return {  };
+    return {};
 }
 
 void Solution::moveZeroes(vector<int>& nums)
@@ -138,7 +138,7 @@ int Solution::longestConsecutive(vector<int>& nums)
 
 int Solution::longestConsecutiveNew(vector<int>& nums)
 {
-std:unordered_set<int> set(nums.begin(), nums.end());
+    std::unordered_set<int> set(nums.begin(), nums.end());
 
     int max = 0;
 
@@ -165,4 +165,94 @@ std:unordered_set<int> set(nums.begin(), nums.end());
     }
 
     return max;
+}
+
+int Solution::maxArea(vector<int>& height)
+{
+    // 减少赋值操作会增加执行速度
+
+    int maxArea = 0;
+    int l = 0;
+    int r = height.size() - 1;
+
+    // 使用双指针。设置一个指针在数组的左侧，一个指向右侧。总是把指向短板的指针移动。
+    // 移动长板，矩形的面积一定会变小，移动短板，矩形的面积可能会变大
+    while (l < r)
+    {
+        int area = min(height[l], height[r]) * (r - l);
+        maxArea = max(maxArea, area);
+
+        if (height[l] < height[r])
+        {
+            l++;
+        }
+        else
+        {
+            r--;
+        }
+    }
+
+    return maxArea;
+}
+
+vector<vector<int>> Solution::threeSum(vector<int>& nums)
+{
+    sort(nums.begin(), nums.end());
+
+    // 排序后，第一个数大于零总和不可能大于零
+    if (nums[0] > 0)
+    {
+        return {};
+    }
+
+    int size = nums.size();
+    vector<vector<int>> res;
+    //res.reserve(size);
+
+    for (int i = 0; i < size - 2; i++)
+    {
+        // 排过序，没必要用hash去重
+        if (i && nums[i] == nums[i - 1])
+        {
+            continue;
+        }
+
+        int tar = nums[i] * (-1);
+        int left = i + 1;
+        int right = size - 1;
+
+        while (left < right)
+        {
+            if (nums[left] + nums[right] < tar)
+            {
+                left++;
+            }
+            else if (nums[left] + nums[right] > tar)
+            {
+                right--;
+            }
+            else if (nums[left] + nums[right] == tar)
+            {
+                vector<int> vectar{ nums[left],nums[right],nums[i] };
+                res.push_back(vectar);
+
+                // 两个指针都满足条件，同时移动即可
+                left++;
+                right--;
+
+                //去掉重复的结果
+                while (left < right && nums[right] == nums[right + 1])
+                {
+                    right--;
+                }
+
+                while (left < right && nums[left] == nums[left - 1])
+                {
+                    left++;
+                }
+            }
+        }
+    }
+
+    return res;
 }
